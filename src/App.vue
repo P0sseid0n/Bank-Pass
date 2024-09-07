@@ -9,9 +9,10 @@ const typedPass = reactive<Array<Array<Number>>>([])
 
 const passList = reactive<Array<String>>([])
 
-function generateKeyboard(numbers: number[], size: number) {
+function generateKeyboard(numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) {
   const keyboard: Array<Array<Number>> = []
   const restNumbers = [...numbers]
+  const size = 2
 
   while (restNumbers.length > 0) {
     const key = restNumbers.shift()
@@ -28,19 +29,19 @@ function generateKeyboard(numbers: number[], size: number) {
   return keyboard as Array<[number, number]>
 }
 
-const keyboard = generateKeyboard([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 2)
+const keyboard = generateKeyboard()
 
 watch(
   typedPass,
   (newTypedPass) => {
-    const positions = Array(newTypedPass.length).fill(0)
+    const positions = Array<0 | 1>(newTypedPass.length).fill(0)
 
     let pass = ""
 
     passList.splice(0, passList.length)
 
     while (positions.includes(0)) {
-      let lastZeroIndex: number = positions.findLastIndex(
+      const lastZeroIndex: number = positions.findLastIndex(
         (value) => value === 0
       )
 
